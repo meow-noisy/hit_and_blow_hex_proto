@@ -9,3 +9,29 @@ function number_generator() {
 
     return selected;
 };
+
+
+function count_num_of_hit_and_blow(estimate_array) {
+    correct_array = ["1", "2", "3", "4", "5"];
+
+    let hit = 0;
+    let blow = 0;
+
+    for (let i = 0, len = estimate_array.length; i < len; ++i) {
+
+        if (estimate_array[i] === correct_array[i]) {
+            ++hit;
+        }
+
+        if (correct_array.includes(estimate_array[i])) {
+            ++blow;
+        }
+    }
+
+    const result = {
+        "hit": hit,
+        "blow": blow
+    };
+
+    return result;
+}
