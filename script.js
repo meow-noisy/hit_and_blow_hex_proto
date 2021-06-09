@@ -35,3 +35,13 @@ function count_num_of_hit_and_blow(estimate_array) {
 
     return result;
 }
+
+
+var reply_click = function () {
+    alert("Button clicked, id " + this.id);
+}
+
+var btns = document.querySelectorAll('.btn');
+for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click', reply_click, false)
+}
