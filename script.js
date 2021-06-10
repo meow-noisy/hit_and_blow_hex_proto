@@ -36,12 +36,23 @@ function count_num_of_hit_and_blow(estimate_array) {
     return result;
 }
 
+var predict_num_list = []
+const predict = document.getElementById("predict");
 
-var reply_click = function () {
-    alert("Button clicked, id " + this.id);
+
+const reply_click = function () {
+    console.log("Button clicked, id " + this.id);
+    predict_num_list.push(this.id);
+
+    predict.innerHTML = predict_num_list
+
 }
 
-var btns = document.querySelectorAll('.btn');
+
+
+
+const btns = document.querySelectorAll(".btn");
 for (var i = 0; i < btns.length; i++) {
-    btns[i].addEventListener('click', reply_click, false)
+    btns[i].addEventListener("click", reply_click, false)
 }
+
