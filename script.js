@@ -62,7 +62,7 @@ function clear_result() {
 
 var result_text = document.getElementById("result");
 function submit_result() {
-    const result = count_num_of_hit_and_blow(predict_num_list);
+    let result = count_num_of_hit_and_blow(predict_num_list);
     result_text.innerHTML = `result: hit=${result["hit"]}, blow=${result["blow"]}`
     clear_result()
     console.log(result)
