@@ -48,6 +48,11 @@ const reply_click = function () {
     if (predict_num_list.length >= num_of_array) {
         return
     }
+    let num_to_be_pushed = this.id
+    if (predict_num_list.includes(num_to_be_pushed)) {
+        return
+    }
+
     predict_num_list.push(this.id);
     predict.innerHTML = predict_num_list
 }
