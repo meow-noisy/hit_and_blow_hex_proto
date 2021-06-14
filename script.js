@@ -13,6 +13,8 @@ function number_generator() {
 };
 
 var correct_array = number_generator()
+var submit_button = document.getElementById("submit_btn");
+
 
 
 function count_num_of_hit_and_blow(estimate_array) {
@@ -55,19 +57,26 @@ const reply_click = function () {
 
     predict_num_list.push(this.id);
     predict.innerHTML = predict_num_list
+
+    this.disabled = true;
 }
 
 
 
-const btns = document.querySelectorAll(".btn");
+var btns = document.querySelectorAll(".btn");
 for (var i = 0; i < btns.length; i++) {
-    btns[i].addEventListener("click", reply_click, false)
+    btns[i].addEventListener("click", reply_click, false);
 }
 
 
 function clear_result() {
     predict_num_list = []
     predict.innerHTML = "ボタンを押してね。"
+
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].disabled = false;
+    }
+
 }
 
 var result_text = document.getElementById("result");
@@ -75,13 +84,22 @@ function submit_result() {
     let result = count_num_of_hit_and_blow(predict_num_list);
     result_text.innerHTML = `result: hit=${result["hit"]}, blow=${result["blow"]}`
     clear_result()
+
     console.log(result)
 }
 
 
 
-const submit_button = document.getElementById("submit_btn");
 submit_button.addEventListener("click", submit_result, false);
 
 var clear_btn = document.getElementById("clear_btn");
 clear_btn.addEventListener("click", clear_result, false);
+
+
+var giveup_btn = document.getElementById("giveup_btn");
+giveup_btn.addEventListener("click", () => {
+    result_text.innerHTML = "result: ";
+    clear_result();
+    correct_array = number_generator();
+}, false);
+
