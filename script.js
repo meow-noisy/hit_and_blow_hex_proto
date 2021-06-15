@@ -1,3 +1,5 @@
+'use strict';
+
 
 var num_of_array = 5
 
