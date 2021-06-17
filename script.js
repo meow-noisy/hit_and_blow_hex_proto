@@ -71,6 +71,35 @@ for (var i = 0; i < btns.length; i++) {
 }
 
 
+var history_table = document.getElementById("history");
+var history_table_body = history_table.getElementsByTagName("tbody")[0];
+function add_history(predict, hit, blow) {
+    let row = document.createElement("tr");
+
+    let list = [predict, hit, blow];
+
+    for (var j = 0; j < 3; j++) {
+        // Create a <td> element and a text node, make the text
+        // node the contents of the <td>, and put the <td> at
+        // the end of the table row
+        var cell = document.createElement("td");
+        var cellText = document.createTextNode(list[j]);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+    }
+    history_table_body.appendChild(row);
+}
+
+
+function delete_history() {
+
+    let rows = history_table.getElementsByTagName('tbody')[0].getElementsByTagName('tr')
+    for (let i = rows.length - 1; i >= 0; i--) {
+        history_table.getElementsByTagName('tbody')[0].deleteRow(i);
+    }
+}
+
+
 function clear_result() {
     predict_num_list = []
     predict.innerHTML = "ボタンを押してね。"
@@ -85,6 +114,7 @@ var result_text = document.getElementById("result");
 function submit_result() {
     let result = count_num_of_hit_and_blow(predict_num_list);
     result_text.innerHTML = `result: hit=${result["hit"]}, blow=${result["blow"]}`
+    add_history(predict_num_list, result["hit"], result["blow"])
     clear_result()
 
     console.log(result)
@@ -102,6 +132,8 @@ var giveup_btn = document.getElementById("giveup_btn");
 giveup_btn.addEventListener("click", () => {
     result_text.innerHTML = "result: ";
     clear_result();
+    delete_history();
     correct_array = number_generator();
 }, false);
+
 
