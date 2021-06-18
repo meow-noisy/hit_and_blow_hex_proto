@@ -1,8 +1,23 @@
 'use strict';
 
 
-var num_of_array = 5
+var submit_button = document.getElementById("message");
 
+
+var num_of_array = 5
+var predict_num_list = []
+
+var submit_button = document.getElementById("submit_btn");
+const predict = document.getElementById("predict");
+var btns = document.querySelectorAll(".btn");
+var history_table = document.getElementById("history");
+var history_table_body = history_table.getElementsByTagName("tbody")[0];
+var result_text = document.getElementById("result");
+var clear_btn = document.getElementById("clear_btn");
+var giveup_btn = document.getElementById("giveup_btn");
+
+
+// 当ててほしい数を生成する
 function number_generator() {
     // Shuffle array
     let array = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"];
@@ -13,12 +28,9 @@ function number_generator() {
 
     return selected;
 };
-
 var correct_array = number_generator()
-var submit_button = document.getElementById("submit_btn");
 
-
-
+// hit数, blow数を計算する
 function count_num_of_hit_and_blow(estimate_array) {
 
     let hit = 0;
@@ -43,10 +55,8 @@ function count_num_of_hit_and_blow(estimate_array) {
     return result;
 }
 
-var predict_num_list = []
-const predict = document.getElementById("predict");
 
-
+// 数字ボタンを押した時
 const reply_click = function () {
     // console.log("Button clicked, id " + this.id);
     if (predict_num_list.length >= num_of_array) {
@@ -64,15 +74,12 @@ const reply_click = function () {
 }
 
 
-
-var btns = document.querySelectorAll(".btn");
 for (var i = 0; i < btns.length; i++) {
     btns[i].addEventListener("click", reply_click, false);
 }
 
 
-var history_table = document.getElementById("history");
-var history_table_body = history_table.getElementsByTagName("tbody")[0];
+
 function add_history(predict, hit, blow) {
     let row = document.createElement("tr");
 
@@ -100,6 +107,7 @@ function delete_history() {
 }
 
 
+// clearボタンを押した時
 function clear_result() {
     predict_num_list = []
     predict.innerHTML = "ボタンを押してね。"
@@ -109,8 +117,11 @@ function clear_result() {
     }
 
 }
+clear_btn.addEventListener("click", clear_result, false);
 
-var result_text = document.getElementById("result");
+
+
+// submitボタンを押した時
 function submit_result() {
     let result = count_num_of_hit_and_blow(predict_num_list);
     result_text.innerHTML = `result: hit=${result["hit"]}, blow=${result["blow"]}`
@@ -119,16 +130,9 @@ function submit_result() {
 
     console.log(result)
 }
-
-
-
 submit_button.addEventListener("click", submit_result, false);
 
-var clear_btn = document.getElementById("clear_btn");
-clear_btn.addEventListener("click", clear_result, false);
-
-
-var giveup_btn = document.getElementById("giveup_btn");
+// give up ボタンを押した時
 giveup_btn.addEventListener("click", () => {
     result_text.innerHTML = "result: ";
     clear_result();
