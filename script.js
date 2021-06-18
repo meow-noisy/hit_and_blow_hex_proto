@@ -9,6 +9,7 @@ var predict_num_list = []
 
 var submit_button = document.getElementById("submit_btn");
 const predict = document.getElementById("predict");
+var message = document.getElementById("message");
 var btns = document.querySelectorAll(".btn");
 var history_table = document.getElementById("history");
 var history_table_body = history_table.getElementsByTagName("tbody")[0];
@@ -72,12 +73,9 @@ const reply_click = function () {
 
     this.disabled = true;
 }
-
-
 for (var i = 0; i < btns.length; i++) {
     btns[i].addEventListener("click", reply_click, false);
 }
-
 
 
 function add_history(predict, hit, blow) {
@@ -120,6 +118,15 @@ function clear_result() {
 clear_btn.addEventListener("click", clear_result, false);
 
 
+function game_clear_state() {
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].disabled = true;
+    }
+    submit_button.disabled = true;
+    clear_btn.disabled = true;
+    giveup_btn.innerHTML = "play again"
+    message.innerHTML = "Congratulations!"
+}
 
 // submitボタンを押した時
 function submit_result() {
@@ -128,16 +135,28 @@ function submit_result() {
     add_history(predict_num_list, result["hit"], result["blow"])
     clear_result()
 
+    if (result["hit"] === num_of_array) {
+        game_clear_state();
+    }
+
     console.log(result)
 }
 submit_button.addEventListener("click", submit_result, false);
 
-// give up ボタンを押した時
-giveup_btn.addEventListener("click", () => {
+
+function reset_state() {
     result_text.innerHTML = "result: ";
+    giveup_btn.innerHTML = "give up"
+    message.innerHTML = ""
     clear_result();
     delete_history();
+    submit_button.disabled = false;
+    clear_btn.disabled = false;
     correct_array = number_generator();
-}, false);
+}
+
+// give up ボタンを押した時
+giveup_btn.addEventListener("click", reset_state, false);
+
 
 
