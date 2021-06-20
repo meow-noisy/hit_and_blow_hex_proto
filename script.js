@@ -17,7 +17,7 @@ var history_table_body = history_table.getElementsByTagName("tbody")[0];
 var result_text = document.getElementById("result");
 var clear_btn = document.getElementById("clear_btn");
 var giveup_btn = document.getElementById("giveup_btn");
-
+var reset_btn = document.getElementById("reset");
 
 // 当ててほしい数を生成する
 function number_generator() {
@@ -124,15 +124,16 @@ function clear_result() {
 clear_btn.addEventListener("click", clear_result, false);
 
 
-
 function game_clear_state() {
     for (var i = 0; i < btns.length; i++) {
         btns[i].disabled = true;
     }
     submit_button.disabled = true;
     clear_btn.disabled = true;
-    giveup_btn.innerHTML = "play again"
     message.innerHTML = "Congratulations!"
+    giveup_btn.disabled = true;
+    reset_btn.style.visibility = 'visible';
+
 }
 
 // submitボタンを押した時
@@ -154,20 +155,38 @@ function submit_result() {
 submit_button.addEventListener("click", submit_result, false);
 
 
+function game_giveup_state() {
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].disabled = true;
+    }
+    submit_button.disabled = true;
+    clear_btn.disabled = true;
+    giveup_btn.disabled = true;
+    message.innerHTML = "answer is " + correct_array;
+
+    reset_btn.style.visibility = 'visible';
+}
+
 function reset_state() {
     result_text.innerHTML = "result: ";
-    giveup_btn.innerHTML = "give up"
     message.innerHTML = ""
     clear_result();
     delete_history();
     submit_button.disabled = true;
     clear_btn.disabled = false;
+    giveup_btn.disabled = false;
     correct_array = number_generator();
+    reset_btn.style.visibility = 'hidden';
 }
 
 
 // give up ボタンを押した時
-giveup_btn.addEventListener("click", reset_state, false);
+giveup_btn.addEventListener("click", game_giveup_state, false);
+
+reset_btn.addEventListener("click", reset_state, false);
+
+
+
 
 
 
