@@ -8,6 +8,7 @@ var num_of_array = 5
 var predict_num_list = []
 
 var submit_button = document.getElementById("submit_btn");
+submit_button.disabled = true;
 const predict = document.getElementById("predict");
 var message = document.getElementById("message");
 var btns = document.querySelectorAll(".btn");
@@ -71,6 +72,10 @@ const reply_click = function () {
     predict_num_list.push(this.id);
     predict.innerHTML = predict_num_list
 
+    if (predict_num_list.length == num_of_array) {
+        submit_button.disabled = false;
+    }
+
     this.disabled = true;
 }
 for (var i = 0; i < btns.length; i++) {
@@ -113,9 +118,11 @@ function clear_result() {
     for (var i = 0; i < btns.length; i++) {
         btns[i].disabled = false;
     }
+    submit_button.disabled = true;
 
 }
 clear_btn.addEventListener("click", clear_result, false);
+
 
 
 function game_clear_state() {
@@ -139,6 +146,9 @@ function submit_result() {
         game_clear_state();
     }
 
+    submit_button.disabled = true;
+
+
     console.log(result)
 }
 submit_button.addEventListener("click", submit_result, false);
@@ -150,10 +160,11 @@ function reset_state() {
     message.innerHTML = ""
     clear_result();
     delete_history();
-    submit_button.disabled = false;
+    submit_button.disabled = true;
     clear_btn.disabled = false;
     correct_array = number_generator();
 }
+
 
 // give up ボタンを押した時
 giveup_btn.addEventListener("click", reset_state, false);
